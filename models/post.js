@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const database = require('../db.js');
+const database = require('./connection.js');
 const user = require('./user.js');
 const tag = require('./tag.js');
 
