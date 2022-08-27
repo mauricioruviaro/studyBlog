@@ -1,0 +1,29 @@
+{
+  "name": "studyblog",
+  "version": "1.0.0",
+  "description": "Blog desenvolvido para adicionar meus resumos de estudos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauricioruviaro/studyBlog.git"
+  },
+  "author": "Mauricio Ruviaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mauricioruviaro/studyBlog/issues"
+  },
+  "homepage": "https://github.com/mauricioruviaro/studyBlog#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.4"
+  }
+}
