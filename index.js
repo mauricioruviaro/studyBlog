@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const PostsRouter = require('./routes/Posts.js');
-const UsersRouter = require('./routes/Users.js');
-const TagsRouter = require('./routes/Tags.js');
+const PostsRouter = require('./routes/postsRouter.js');
+const UsersRouter = require('./routes/usersRouter.js');
+const TagsRouter = require('./routes/tagsRouter.js');
 
 const PORT = 3000;
 const app = express();
