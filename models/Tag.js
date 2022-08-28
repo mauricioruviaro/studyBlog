@@ -12,12 +12,8 @@ const Tag = database.define('tag', {
 		type: Sequelize.STRING(30),
 		allowNull: false,
 	},
-	createdAt: {
-		type: Sequelize.DATETIME,
-		defaultValue: Sequelize.NOW,
-	},
 }, {
-	timestamps: true,
+	timestamps: false,
 });
 
 module.exports = Tag;
