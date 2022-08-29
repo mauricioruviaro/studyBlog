@@ -33,7 +33,7 @@ const login = async (email, password) => {
 
   if (!user) return { error: 'Invalid fields' };
 
-  if (!await validatePassword(password, user.dataValues.password)) return { error: 'Invalid fields' };
+  if (!await validatePassword(password, user.password)) return { error: 'Invalid fields' };
 
   const token = makeToken(user.id);
 
