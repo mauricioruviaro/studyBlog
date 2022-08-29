@@ -1,20 +1,22 @@
 'use strict';
+const { DataTypes } = require("sequelize");
 
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('tag', {
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
       tag: {
-        type: Sequelize.STRING(30),
+        type: DataTypes.STRING(30),
         allowNull: false,
       },
     }, {
-      timestamps: true,
+      timestamps: false,
+      tableName: 'tag'
     });
   },
 

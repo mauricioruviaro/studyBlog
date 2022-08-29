@@ -1,32 +1,35 @@
 'use strict';
 
+const { DataTypes } = require("sequelize");
+
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up (queryInterface, _Sequelize) {
     await queryInterface.createTable('user', {
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      userName: {
-        type: Sequelize.STRING(20),
+      username: {
+        type: DataTypes.STRING(20),
         allowNull: false,
       },
-      senha: {
-        type: Sequelize.STRING(60),
+      password: {
+        type: DataTypes.STRING(60),
         allowNull: false,
       },
       email: {
-        type: Sequelize.STRING(150),
+        type: DataTypes.STRING(150),
         allowNull: false,
       },
       createdAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     }, {
-      timestamps: true,
+      timestamps: false,
+      tableName: 'user'
     });
   },
 

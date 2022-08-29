@@ -1,24 +1,25 @@
 'use strict';
+const { DataTypes } = require("sequelize");
 
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('post', {
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
       title: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       text: {
-        type: Sequelize.TEXT('long'),
+        type: DataTypes.TEXT('long'),
         allowNull: false,
       },
       authorId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'user',
@@ -26,7 +27,7 @@ module.exports = {
         },
       },
       tagId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: true,
         references: {
           model: 'tag',
@@ -34,11 +35,12 @@ module.exports = {
         },
       },
       createdAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     }, {
-      timestamps: true,
+      timestamps: false,
+      tableName: 'post'
     });
   },
 
