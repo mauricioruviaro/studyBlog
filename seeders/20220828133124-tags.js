@@ -79,6 +79,12 @@ module.exports = {
         {
           tag: 'ddd',
         },
+        {
+          tag: 'html',
+        },
+        {
+          tag: 'css',
+        },
       ],
     {});
   },
