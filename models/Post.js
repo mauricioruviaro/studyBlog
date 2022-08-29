@@ -1,27 +1,23 @@
-const Sequelize = require('sequelize');
+const { DataTypes } = require("sequelize");
 const database = require('./connection.js');
 
 const Post = database.define('post', {
 	id: {
-		type: Sequelize.INTEGER,
+		type: DataTypes.INTEGER,
 		autoIncrement: true,
 		allowNull: false,
 		primaryKey: true,
 	},
 	title: {
-		type: Sequelize.STRING(200),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 	text: {
-		type: Sequelize.STRING,
+		type: DataTypes.STRING,
 		allowNull: false,
 	},
-	createdAt: {
-		type: Sequelize.DATETIME,
-		defaultValue: Sequelize.NOW,
-	},
 	authorId: {
-		type: Sequelize.INTEGER,
+		type: DataTypes.INTEGER,
 		allowNull: false,
 		references: {
 			model: 'user',
@@ -29,15 +25,22 @@ const Post = database.define('post', {
 		},
 	},
 	tagId: {
-		type: Sequelize.INTEGER,
+		type: DataTypes.INTEGER,
 		allowNull: true,
 		references: {
 			model: 'tag',
 			key: 'id',
 		},
 	},
+	createdAt: {
+		type: DataTypes.DATE,
+		defaultValue: DataTypes.NOW,
+	},
 }, {
-	timestamps: true,
+	timestamps: false,
+	freezeTableName: true,
+	underscored: false,
+	tableName: 'post'
 });
 
 module.exports = Post;

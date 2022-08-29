@@ -1,19 +1,20 @@
-const Sequelize = require('sequelize');
+const { DataTypes } = require("sequelize");
 const database = require('./Connection.js');
 
 const Tag = database.define('tag', {
 	id: {
-		type: Sequelize.INTEGER,
+		type: DataTypes.INTEGER,
 		autoIncrement: true,
 		allowNull: false,
 		primaryKey: true,
 	},
 	tag: {
-		type: Sequelize.STRING(30),
+		type: DataTypes.STRING(30),
 		allowNull: false,
 	},
 }, {
 	timestamps: false,
+	tableName: 'tag'
 });
 
 module.exports = Tag;
