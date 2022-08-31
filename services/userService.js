@@ -1,5 +1,6 @@
 require('dotenv').config();
 const userModel = require('../models/User');
+const ResetUserPassword = require('../models/ResetUserPassword');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -21,7 +22,7 @@ const signIn = async (email, password) => {
 
   if (!await validatePassword(password, user.password)) return { error: 'Invalid fields', status: 401 };
 
-  const token = makeToken(user.id);
+  const token = makeToken(user.id, JWTCONFIG);
 
   return { token, error: null, status: 200 };
 }
@@ -32,7 +33,7 @@ const emailExistsInDatabase = async (loginEmail) => await userModel.findOne({ wh
 
 const validatePassword = async (password, databasePassword) => await bcrypt.compare(password, databasePassword);
 
-const makeToken = (id) => jwt.sign({ userId: id }, SECRET, JWTCONFIG);
+const makeToken = (userId, config) => jwt.sign({ userId }, SECRET, config);
 
 const signUp = async (username, email, password) => {
   if (!validateEmail(email)) return { error: 'Invalid e-mail', status: 400 }
@@ -50,7 +51,7 @@ const signUp = async (username, email, password) => {
     email,
   });
 
-  const token = makeToken(newUser.id);
+  const token = makeToken(newUser.id, JWTCONFIG);
 
   return { token, error: null, status: 201 }
 }
@@ -63,7 +64,42 @@ const usernameExistsInDatabase = async (loginUsername) => await userModel.findOn
 
 const makePasswordHash = async (password) => bcrypt.hash(password, ROUNDS);
 
+const forgotPassword = async (email) => {
+  if (!validateEmail(email)) return { error: 'Invalid e-mail', status: 400 }
+
+  const user = await emailExistsInDatabase(email);
+  
+  if (!user) return { error: 'User not found', status: 404 }
+
+  const expiresInOneHourConfig = {
+    expiresIn: '1h',
+    algorithm: process.env.JWT_ALGORITHM,
+  }
+
+  const token = makeToken(user.id, expiresInOneHourConfig);
+
+  const existsForgotRequest = await existsRequestToChangePassword(user.id);
+
+  if (existsForgotRequest) {
+    await ResetUserPassword.update({
+      token,
+    }, {
+      where: { userId: user.id },
+    });
+  } else {
+    await ResetUserPassword.create({
+      userId: user.id,
+      token,
+    });
+  }
+
+  return { message: 'E-mail has been sended.', status: 201, error: null }
+};
+
+const existsRequestToChangePassword = async (userId) => await ResetUserPassword.findOne({ where: { userId } });
+
 module.exports = {
   signIn,
   signUp,
+  forgotPassword,
 }
