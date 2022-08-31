@@ -1,4 +1,4 @@
-const { signIn, signUp } = require('../services/userService.js');
+const { signIn, signUp, forgotPassword } = require('../services/userService.js');
 
 const userSignIn = async (req, res) => {
   const { email, password } = req.body;
@@ -32,7 +32,23 @@ const userSignUp = async (req, res) => {
   }
 };
 
+const userForgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ error: 'Empty fields' });
+
+  try {
+    const { error, message, status } = await forgotPassword(email);
+    if (error) return res.status(status).json({ error });
+
+    res.status(status).json({ message });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error. Please, try again later.' });
+  }
+};
+
 module.exports = {
   userSignIn,
   userSignUp,
+  userForgotPassword,
 }
